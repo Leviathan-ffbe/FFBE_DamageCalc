@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <link rel="stylesheet" href="style.css">
+  <title>FFBEダメージ計算機</title>
+  <script src="dmgTotal.js"></script>
+</head>
+
+<body>
+  <h1>FFBEダメージ計算機
+    <font color="red">
+      <font size="4">※2021年9月10日以降ver※</font>
+    </font>
+  </h1>
+  <h2>使い方(
+    <a href="https://youtu.be/V-QWHz8x8dI">説明動画はこちら</a>)
+    <font color="red">
+      <font size="2">2022年7月7日更新</font>
+    </font>
+  </h2>
+  <p>
+    <font size="2">１．計算欄下にある注釈を参考の上、各パラメータを入力してください(
+      <a href="http://nogameno.life.coocan.jp/ffbe_def_list.htm">強敵防御値一覧</a>)
+      <br>２．半角数字で入力してください
+      <br>３．各武器補正値については最下部をご覧ください
+      <br>
+    </font>
+  </p>
+  <h2>《ダメージ計算》
+    <font color="red">
+      <font size="4">　第10回ビジョンズワールド [超魔生物ハドラー:防御値3000000/精神値3000000]
+        <font color="black">
+          <font size="2">　※計測ミスの場合もありますので参考程度にご活用下さい※
+            <br>
+          </font>
+        </font>
+      </font>
+    </font>
+  </h2>
+  <p></p>
+  <table>
+<tr>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">LV</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">武器種</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">Atk</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">特効</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">倍率</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">無視</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">LB</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">EoP</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">EoB</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">Jmp</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">EST</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">EDM</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">属耐</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">武耐</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">防御値</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">デバフ</span>
+  </td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">敵バフ</span>
+  </td>
+  <td></td>
+  <td style="text-align: center;">
+    <span style="font-size: 12px;">予想ダメージ(最小-期待値-最大)</span>
+  </td>
+</tr>
+
+    <tr>
+<tr>
+  <form action="#" name="form1">
+    <td>
+      <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="1" size="1.5">
+    </td>
+    <td>
+      <select id="WEP1" name="WEP" tabindex="2" onchange="handleClick('WEP1')"></select>
+    </td>
+    <td>
+      <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="3" size="3">
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="6" size="2">
+        <span class="tooltiptext">※特効欄=キラー率(対象が複種族の場合は種族数に合わせて適宜除算)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="7" size="6">
+        <span class="tooltiptext">※倍率欄=アビリティorLB倍率(15000%なら15000と記入)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="8" size="2">
+        <span class="tooltiptext">※無視欄には攻撃アビ効果に"相手の防御or精神or魔法防御を○○%無効"などがある場合に記入</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="9" size="2">
+        <span class="tooltiptext">※LB欄=LBダメージアップ率</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="10" size="2">
+        <span class="tooltiptext">※EoP欄=ダークビジョンズ系でのパーティ属性ダメージアップ率("10"と記入)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="11" size="2">
+        <span class="tooltiptext">※EoB欄=バフおよびエリア効果での属性ダメージアップ率(加算して記入)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="12" size="2">
+        <span class="tooltiptext">※Jmp欄=ジャンプダメージアップ率</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="13" size="2">
+        <span class="tooltiptext">※EST欄=幻獣ダメージ</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="14" size="2">
+        <span class="tooltiptext">※EDM欄=召喚ダメージ</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="15" size="2">
+        <span class="tooltiptext">※属耐欄=属性耐性値(弱点の場合はマイナス"-"を付けて記入)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="16" size="2">
+        <span class="tooltiptext">※武耐欄=武器耐性値(ダウンの場合はマイナス"-"を付けて記入)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="17" size="6">
+        <span class="tooltiptext">※防御値欄のデフォルト値250は不倒の木兵の防御値および精神値と同等</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="18" size="2">
+        <span class="tooltiptext">※デバフ欄には各種防御系デバフ率を記入(ヒカセンのアマイレなら45、病気なら10など)</span>
+      </div>
+    </td>
+    <td>
+      <div class="tooltip">
+        <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="19" size="2">
+        <span class="tooltiptext">※敵バフ欄には各種バフ率を合算で記入(内部防御バフ60%+後掛け防御バフ30%なら90など)</span>
+      </div>
+    </td>
+    <td>
+<input type="button" value="計算" onclick="culc_dmg(this.form);" tabindex="20">
+      <input type="button" value="リセット" onclick="reset();" tabindex="21">
+    </td>
+    <td>
+      <input type="text" name="Dmg1" value="" size="10">~
+      <input type="text" name="DmgM" value="" size="10">~
+      <input type="text" name="Dmg2" value="" size="10">
+    </td>
+  </form>
+</tr>
+
+    </tr>
+    <tr>
+      <form action="#" name="form2">
+        <td>
+          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="29" size="1.5">
+        </td>
+        <td>
+<select id="WEP2" name="WEP" tabindex="29" onchange="handleClick('WEP2')"></select>
+        </td>
+        <td>
+          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="32" size="3">
+        </td>
+        <td>
+          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="35" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="36" size="6">
+        </td>
+        <td>
+          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="37" size="2">
+        </td>
+        <td>
+          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="38" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="39" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="40" size="2">
+        </td>
+        <td>
+          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="41" size="2">
+        </td>
+        <td>
+          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="42" size="2">
+        </td>
+        <td>
+          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="43" size="2">
+        </td>
+        <td>
+          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="44" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="45" size="2">
+        </td>
+        <td>
+          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="46" size="6">
+        </td>
+        <td>
+          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="47" size="2">
+        </td>
+        <td>
+          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="48" size="2">
+        </td>
+        <td>
+          <input type="button" value="計算" onclick="culc_dmg(2);" tabindex="49">
+          <input type="button" value="リセット" onclick="reset()" tabindex="50">
+        </td>
+        <td>
+          <input type="text" name="Dmg1" value="" size="10">~
+          <input type="text" name="DmgM" value="" size="10">~
+          <input type="text" name="Dmg2" value="" size="10">
+        </td>
+      </form>
+    </tr>
+    <tr>
+      <form action="#" name="form3">
+        <td>
+          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="59" size="1.5">
+        </td>
+        <td>
+<select id="WEP3" name="WEP" tabindex="59" onchange="handleClick('WEP3')"></select>
+
+
+
+        </td>
+        <td>
+          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="62" size="3">
+        </td>
+        <td>
+          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="65" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="66" size="6">
+        </td>
+        <td>
+          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="67" size="2">
+        </td>
+        <td>
+          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="68" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="69" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="70" size="2">
+        </td>
+        <td>
+          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="71" size="2">
+        </td>
+        <td>
+          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="72" size="2">
+        </td>
+        <td>
+          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="73" size="2">
+        </td>
+        <td>
+          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="74" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="75" size="2">
+        </td>
+        <td>
+          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="76" size="6">
+        </td>
+        <td>
+          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="77" size="2">
+        </td>
+        <td>
+          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="78" size="2">
+        </td>
+        <td>
+          <input type="button" value="計算" onclick="culc_dmg(3);" tabindex="79">
+          <input type="button" value="リセット" onclick="reset()" tabindex="80">
+        </td>
+        <td>
+          <input type="text" name="Dmg1" value="" size="10">~
+          <input type="text" name="DmgM" value="" size="10">~
+          <input type="text" name="Dmg2" value="" size="10">
+        </td>
+      </form>
+    </tr>
+    <tr>
+      <form action="#" name="form4">
+        <td>
+          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="89" size="1.5">
+        </td>
+        <td>
+<select id="WEP4" name="WEP" tabindex="89" onchange="handleClick('WEP4')"></select>
+
+
+          </select>
+        </td>
+        <td>
+          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="92" size="3">
+        </td>
+        <td>
+          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="95" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="96" size="6">
+        </td>
+        <td>
+          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="97" size="2">
+        </td>
+        <td>
+          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="98" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="99" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="100" size="2">
+        </td>
+        <td>
+          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="101" size="2">
+        </td>
+        <td>
+          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="102" size="2">
+        </td>
+        <td>
+          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="103" size="2">
+        </td>
+        <td>
+          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="104" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="105" size="2">
+        </td>
+        <td>
+          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="106" size="6">
+        </td>
+        <td>
+          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="107" size="2">
+        </td>
+        <td>
+          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="108" size="2">
+        </td>
+        <td>
+          <input type="button" value="計算" onclick="culc_dmg(4);" tabindex="109">
+          <input type="button" value="リセット" onclick="reset()" tabindex="110">
+        </td>
+        <td>
+          <input type="text" name="Dmg1" value="" size="10">~
+          <input type="text" name="DmgM" value="" size="10">~
+          <input type="text" name="Dmg2" value="" size="10">
+        </td>
+      </form>
+    </tr>
+    <tr>
+      <form action="#" name="form5">
+        <td>
+          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="119" size="1.5">
+        </td>
+        <td>
+ <select id="WEP5" name="WEP" tabindex="119" onchange="handleClick('WEP5')"></select>
+
+
+        </td>
+        <td>
+          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="122" size="3">
+        </td>
+        <td>
+          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="125" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="126" size="6">
+        </td>
+        <td>
+          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="127" size="2">
+        </td>
+        <td>
+          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="128" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="129" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="130" size="2">
+        </td>
+        <td>
+          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="131" size="2">
+        </td>
+        <td>
+          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="132" size="2">
+        </td>
+        <td>
+          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="133" size="2">
+        </td>
+        <td>
+          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="134" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="135" size="2">
+        </td>
+        <td>
+          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="136" size="6">
+        </td>
+        <td>
+          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="137" size="2">
+        </td>
+        <td>
+          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="138" size="2">
+        </td>
+        <td>
+          <input type="button" value="計算" onclick="culc_dmg(5);" tabindex="139">
+          <input type="button" value="リセット" onclick="reset()" tabindex="140">
+        </td>
+        <td>
+          <input type="text" name="Dmg1" value="" size="10">~
+          <input type="text" name="DmgM" value="" size="10">~
+          <input type="text" name="Dmg2" value="" size="10">
+        </td>
+      </form>
+    </tr>
+    <tr>
+      <form action="#" name="form6">
+        <td>
+          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="149" size="1.5">
+        </td>
+        <td>
+<select id="WEP6" name="WEP" tabindex="29" onchange="handleClick('WEP6')"></select>
+
+
+        </td>
+        <td>
+          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="152" size="3">
+        </td>
+        <td>
+          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="155" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="156" size="6">
+        </td>
+        <td>
+          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="157" size="2">
+        </td>
+        <td>
+          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="158" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="159" size="2">
+        </td>
+        <td>
+          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="160" size="2">
+        </td>
+        <td>
+          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="161" size="2">
+        </td>
+        <td>
+          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="162" size="2">
+        </td>
+        <td>
+          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="163" size="2">
+        </td>
+        <td>
+          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="164" size="2">
+        </td>
+        <td>
+          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="165" size="2">
+        </td>
+        <td>
+          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="166" size="6">
+        </td>
+        <td>
+          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="167" size="2">
+        </td>
+        <td>
+          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="168" size="2">
+        </td>
+        <td>
+          <input type="button" value="計算" onclick="culc_dmg(6);" tabindex="169">
+          <input type="button" value="リセット" onclick="reset()" tabindex="170">
+        </td>
+        <td>
+          <input type="text" name="Dmg1" value="" size="10">~
+          <input type="text" name="DmgM" value="" size="10">~
+          <input type="text" name="Dmg2" value="" size="10">
+        </td>
+        <br>
+      </form>
+    </tr>
+    <tr>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      	  <td style="text-align: center;">
+    <span style="font-size: 12px;"><button onclick="calculateTotal()" class="calculate-button">合計値を計算</button></span>
+  </td>
+
+      <td>
+        <input type="text" id="resultDmg1" readonly style="width: 99px;">
+        <span>~</span>
+        <input type="text" id="resultDmgM" readonly style="width: 99px;">
+        <span>~</span>
+        <input type="text" id="resultDmg2" readonly style="width: 99px;">
+      </td>
+    </tr>
+  </table>
+  <font color="blue">
+    <font size="2">※Lv欄=ユニットレベル
+      <br>※武器種欄の最下部には独特の武器補正を持つ武器を列挙
+      <br>
+      <font color="red">
+        <font size="2">※魔力値or精神値依存攻撃の場合にも各武器種を選択(2022年01月20日より適用)
+          <br>※ただし固定値ダメージや持続ダメージには武器補正が適用されないので素手を選択
+          <br>※武器種"ジャンプ(両手武具)"は両手武具+ジャンプ攻撃時に選択
+          <br>
+        </font>
+
+  <script src="script.js"></script>
+
+  <script src="dmgTotal.js"></script>
+</body>
+
+</html>
