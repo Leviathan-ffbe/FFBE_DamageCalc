@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+/* Reset and box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -38,6 +45,10 @@ a {
   text-decoration: none;
 }
 
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -74,9 +85,10 @@ th {
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, visibility 0.3s;
   white-space: nowrap;
-  font-size: 12px; /* ツールチップの文字サイズを調整 */
+  font-size: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow */
 }
 
 .tooltip:hover .tooltiptext {
@@ -97,8 +109,6 @@ th {
   color: red;
 }
 
-/* 追加のスタイル */
-
 .blue {
   color: #007bff;
 }
@@ -113,7 +123,7 @@ th {
 }
 
 .blue-bg-hover:hover {
-  background-color: #007bff;
+  background-color: #0056b3; /* Slightly darker blue for hover */
   color: #fff;
 }
 
