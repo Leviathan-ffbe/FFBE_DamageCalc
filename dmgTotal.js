@@ -91,6 +91,11 @@
           dmgM = dmgM * 1.50;
           dmg2 = dmg2 * 1.75;
         }
+      　if (form_o.elements.WEP.value == "ダークアポカリプス") {
+          dmg1 = dmg1 * 1.50;
+          dmgM = dmgM * 1.75;
+          dmg2 = dmg2 * 2.00;
+        }
         if (form_o.elements.WEP.value == "刀") {
           dmg1 = dmg1 * 1.05;
           dmgM = dmgM * 1.15;
