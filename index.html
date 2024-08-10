@@ -1,608 +1,1088 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <title>FFBEダメージ計算機　引き継ぎサイト</title>
+  <title>FFBEダメージ計算機</title>
   <script src="dmgTotal.js"></script>
+  <script type="text/javascript">
+    <!--
+    	function culc_dmg(get_no) {	//┌────────←代入される←────────┐
+    		dmg = 0.0;
+    		lva = 0.0;
+    		form_o = document.forms.form1
+    		if (get_no == 2){
+    			form_o = document.forms.form2
+    		}
+    		if (get_no == 3){
+    			form_o = document.forms.form3
+    		}
+    		if (get_no == 4){
+    			form_o = document.forms.form4
+    		}
+    		if (get_no == 5){
+    			form_o = document.forms.form5
+    		}
+    		if (get_no == 6){
+    			form_o = document.forms.form6
+    		}
+    		
+    		lva = 1 + eval(form_o.elements.LV.value)/100;
+    		dmg = form_o.elements.ATK.value * form_o.elements.ATK.value;
+    
+    		tdf = form_o.elements.Buff.value - form_o.elements.Break.value;
+    		tdf = -1 * tdf;
+    		def = form_o.elements.Defp.value * (100 - tdf) / 100;
+    
+    		var def = Math.floor(def);
+    
+    		def = def * ((1 - eval(form_o.elements.Wdp.value)/100))
+    		dmg = dmg / def
+    		wst = form_o.elements.Wst.value / 100
+    		wst = wst * (1 + form_o.elements.LBup.value / 100)
+    		wst = wst * (1 - 0.01*form_o.elements.Wre.value);
+    		wst = wst * (1 + form_o.elements.EoP.value / 100);
+    		wst = wst * (1 + form_o.elements.EoB.value / 100);
+    		wst = wst * (1 + form_o.elements.CDU.value / 100);
+    		dmg = dmg * lva * wst;
+    
+    		dmg1 = dmg * 0.85;
+    		dmgM = dmg * 0.925;
+    		dmg2 = dmg * 1.00;
+    
+    		if (form_o.elements.WEP.value == "短剣") {
+    			dmg1 = dmg1 * 1.10;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.20;
+    		}
+    		if (form_o.elements.WEP.value == "TH短剣") {
+    			dmg1 = dmg1 * 1.45;
+    			dmgM = dmgM * 1.55;
+    			dmg2 = dmg2 * 1.65;
+    		}
+    		if (form_o.elements.WEP.value == "剣") {
+    			dmg1 = dmg1 * 1.05;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.25;
+    		}
+    		if (form_o.elements.WEP.value == "カリパー") {
+    			dmg1 = dmg1 * 1.00;
+    			dmgM = dmgM * 1.25;
+    			dmg2 = dmg2 * 1.50;
+    		}
+    		if (form_o.elements.WEP.value == "TH剣") {
+    			dmg1 = dmg1 * 1.25;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "セイバー") {
+    			dmg1 = dmg1 * 1.30;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.70;
+    		}
+    		if (form_o.elements.WEP.value == "レッド") {
+    			dmg1 = dmg1 * 1.30;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.70;
+    		}
+    		if (form_o.elements.WEP.value == "咎人") {
+    			dmg1 = dmg1 * 0.01;
+    			dmgM = dmgM * 0.555;
+    			dmg2 = dmg2 * 1.10;
+    		}
+    		if (form_o.elements.WEP.value == "大剣") {
+    			dmg1 = dmg1 * 1.00;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.30;
+    		}
+    		if (form_o.elements.WEP.value == "TH大剣") {
+    			dmg1 = dmg1 * 1.25;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "Dアポ") {
+    			dmg1 = dmg1 * 1.50;
+    			dmgM = dmgM * 1.75;
+    			dmg2 = dmg2 * 2.00;
+    		}
+    		if (form_o.elements.WEP.value == "刀") {
+    			dmg1 = dmg1 * 1.05;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.25;
+    		}
+    		if (form_o.elements.WEP.value == "TH刀") {
+    			dmg1 = dmg1 * 1.25;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "杖") {
+    			dmg1 = dmg1 * 1.10;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.20;
+    		}
+    		if (form_o.elements.WEP.value == "TH杖") {
+    			dmg1 = dmg1 * 1.25;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "ロッド") {
+    			dmg1 = dmg1 * 1.10;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.20;
+    		}
+    		if (form_o.elements.WEP.value == "THロッド") {
+    			dmg1 = dmg1 * 1.25;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "弓") {
+    			dmg1 = dmg1 * 1.35;
+    			dmgM = dmgM * 1.60;
+    			dmg2 = dmg2 * 1.85;
+    		}
+    		if (form_o.elements.WEP.value == "斧") {
+    			dmg1 = dmg1 * 0.85;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.45;
+    		}
+    		if (form_o.elements.WEP.value == "TH斧") {
+    			dmg1 = dmg1 * 1.15;
+    			dmgM = dmgM * 1.55;
+    			dmg2 = dmg2 * 1.95;
+    		}
+    		if (form_o.elements.WEP.value == "ハンマー") {
+    			dmg1 = dmg1 * 0.95;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.35;
+    		}
+    		if (form_o.elements.WEP.value == "THハンマー") {
+    			dmg1 = dmg1 * 1.15;
+    			dmgM = dmgM * 1.55;
+    			dmg2 = dmg2 * 1.95;
+    		}
+    		if (form_o.elements.WEP.value == "槍") {
+    			dmg1 = dmg1 * 1.00;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.30;
+    		}
+    		if (form_o.elements.WEP.value == "TH槍") {
+    			dmg1 = dmg1 * 1.25;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "THJMP") {
+    			dmg1 = dmg1 * 2.50;
+    			dmgM = dmgM * 2.65;
+    			dmg2 = dmg2 * 2.80;
+    		}
+    		if (form_o.elements.WEP.value == "楽器") {
+    			dmg1 = dmg1 * 1.05;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.25;
+    		}
+    		if (form_o.elements.WEP.value == "TH楽器") {
+    			dmg1 = dmg1 * 1.35;
+    			dmgM = dmgM * 1.55;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "鞭") {
+    			dmg1 = dmg1 * 1.05;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.25;
+    		}
+    		if (form_o.elements.WEP.value == "TH鞭") {
+    			dmg1 = dmg1 * 1.30;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.70;
+    		}
+    		if (form_o.elements.WEP.value == "クアール") {
+    			dmg1 = dmg1 * 1.05;
+    			dmgM = dmgM * 1.30;
+    			dmg2 = dmg2 * 1.55;
+    		}
+    		if (form_o.elements.WEP.value == "投擲") {
+    			dmg1 = dmg1 * 1.05;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.25;
+    		}
+    		if (form_o.elements.WEP.value == "TH投擲") {
+    			dmg1 = dmg1 * 1.30;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.70;
+    		}
+    		if (form_o.elements.WEP.value == "イカサマ") {
+    			dmg1 = dmg1 * 0.30;
+    			dmgM = dmgM * 1.10;
+    			dmg2 = dmg2 * 1.90;
+    		}
+    		if (form_o.elements.WEP.value == "イカサマ+1汎用") {
+    			dmg1 = dmg1 * 0.60;
+    			dmgM = dmgM * 1.35;
+    			dmg2 = dmg2 * 2.10;
+    		}
+    		if (form_o.elements.WEP.value == "イカサマ+1専用") {
+    			dmg1 = dmg1 * 1.20;
+    			dmgM = dmgM * 3.40;
+    			dmg2 = dmg2 * 5.60;
+    		}
+    		if (form_o.elements.WEP.value == "銃") {
+    			dmg1 = dmg1 * 1.10;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.20;
+    		}
+    		if (form_o.elements.WEP.value == "TH銃") {
+    			dmg1 = dmg1 * 1.35;
+    			dmgM = dmgM * 1.55;
+    			dmg2 = dmg2 * 1.75;
+    		}
+    		if (form_o.elements.WEP.value == "ザイル") {
+    			dmg1 = dmg1 * 0.30;
+    			dmgM = dmgM * 1.00;
+    			dmg2 = dmg2 * 1.70;
+    		}
+    		if (form_o.elements.WEP.value == "メイス") {
+    			dmg1 = dmg1 * 1.10;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.20;
+    		}
+    		if (form_o.elements.WEP.value == "THメイス") {
+    			dmg1 = dmg1 * 1.40;
+    			dmgM = dmgM * 1.50;
+    			dmg2 = dmg2 * 1.60;
+    		}
+    		if (form_o.elements.WEP.value == "格闘") {
+    			dmg1 = dmg1 * 1.15;
+    			dmgM = dmgM * 1.15;
+    			dmg2 = dmg2 * 1.15;
+    		}
+    		if (form_o.elements.WEP.value == "TH格闘") {
+    			dmg1 = dmg1 * 1.45;
+    			dmgM = dmgM * 1.55;
+    			dmg2 = dmg2 * 1.65;
+    		}
+    		if (form_o.elements.WEP.value == "素手") {
+    			dmg1 = dmg1 * 1.00;
+    			dmgM = dmgM * 1.00;
+    			dmg2 = dmg2 * 1.00;
+    		}
+    
+    		var dmg1 = Math.floor(dmg1);
+    		var dmgM = Math.floor(dmgM);
+    		var dmg2 = Math.floor(dmg2);
+    
+    		dmg1 = dmg1 * (1 - 0.01*form_o.elements.Ele.value);
+    		dmg1 = dmg1 * (1 + 0.01*form_o.elements.Killer.value);
+                    dmg1 = dmg1 * (1 + 0.01*form_o.elements.Jmp.value);
+    		dmg1 = dmg1 * (1 + 0.01*form_o.elements.EST.value);
+    
+    		dmgM = dmgM * (1 - 0.01*form_o.elements.Ele.value);
+    		dmgM = dmgM * (1 + 0.01*form_o.elements.Killer.value);
+                    dmgM = dmgM * (1 + 0.01*form_o.elements.Jmp.value);
+    		dmgM = dmgM * (1 + 0.01*form_o.elements.EST.value);
+    
+    		dmg2 = dmg2 * (1 - 0.01*form_o.elements.Ele.value);
+    		dmg2 = dmg2 * (1 + 0.01*form_o.elements.Killer.value);
+                    dmg2 = dmg2 * (1 + 0.01*form_o.elements.Jmp.value);
+    		dmg2 = dmg2 * (1 + 0.01*form_o.elements.EST.value);
+    
+    
+    		if (form_o.elements.Wdp.value >= 1) {
+    		var dmg1 = Math.round(dmg1 - 0.4);
+    		}
+    
+    		if (form_o.elements.Wdp.value >= 1) {
+    		var dmgM = Math.round(dmgM - 0.4);
+    		}
+    
+    		if (form_o.elements.Wdp.value >= 1) {
+    		var dmg2 = Math.round(dmg2 - 0.4);
+    		}
+    
+    		var dmg1 = Math.floor(dmg1);
+    		var dmgM = Math.floor(dmgM);
+    		var dmg2 = Math.floor(dmg2);
+    
+    		dmg1 = dmg1 * (1 + 0.01*form_o.elements.EDM.value);
+    		dmgM = dmgM * (1 + 0.01*form_o.elements.EDM.value);
+    		dmg2 = dmg2 * (1 + 0.01*form_o.elements.EDM.value);
+    
+    		var dmg1 = Math.floor(dmg1);
+    		var dmgM = Math.floor(dmgM);
+    		var dmg2 = Math.floor(dmg2);
+    
+    		form_o.elements.Dmg1.value = dmg1.toFixed(0);
+    		form_o.elements.DmgM.value = dmgM.toFixed(0);
+    		form_o.elements.Dmg2.value = dmg2.toFixed(0);
+    
+    		dmgL = 0.0;
+    		dmgE = 0.0;
+    		dmgH = 0.0;
+    		
+    		if (document.forms.form1.elements.Dmg1.value != "")
+    			dmgL = dmgL + eval(document.forms.form1.elements.Dmg1.value);
+    		if (document.forms.form2.elements.Dmg1.value != "")
+    			dmgL = dmgL + eval(document.forms.form2.elements.Dmg1.value);
+    		if (document.forms.form3.elements.Dmg1.value != "")
+    			dmgL = dmgL + eval(document.forms.form3.elements.Dmg1.value);
+    		if (document.forms.form4.elements.Dmg1.value != "")
+    			dmgL = dmgL + eval(document.forms.form4.elements.Dmg1.value);
+    		if (document.forms.form5.elements.Dmg1.value != "")
+    			dmgL = dmgL + eval(document.forms.form5.elements.Dmg1.value);
+    		if (document.forms.form6.elements.Dmg1.value != "")
+    			dmgL = dmgL + eval(document.forms.form6.elements.Dmg1.value);
+    
+    		if (document.forms.form1.elements.DmgM.value != "")
+    			dmgE = dmgE + eval(document.forms.form1.elements.DmgM.value);
+    		if (document.forms.form2.elements.DmgM.value != "")
+    			dmgE = dmgE + eval(document.forms.form2.elements.DmgM.value);
+    		if (document.forms.form3.elements.DmgM.value != "")
+    			dmgE = dmgE + eval(document.forms.form3.elements.DmgM.value);
+    		if (document.forms.form4.elements.DmgM.value != "")
+    			dmgE = dmgE + eval(document.forms.form4.elements.DmgM.value);
+    		if (document.forms.form5.elements.DmgM.value != "")
+    			dmgE = dmgE + eval(document.forms.form5.elements.DmgM.value);
+    		if (document.forms.form6.elements.DmgM.value != "")
+    			dmgE = dmgE + eval(document.forms.form6.elements.DmgM.value);
+    		
+    		if (document.forms.form1.elements.Dmg2.value != "")
+    			dmgH = dmgH + eval(document.forms.form1.elements.Dmg2.value);
+    		if (document.forms.form2.elements.Dmg2.value != "")
+    			dmgH = dmgH + eval(document.forms.form2.elements.Dmg2.value);
+    		if (document.forms.form3.elements.Dmg2.value != "")
+    			dmgH = dmgH + eval(document.forms.form3.elements.Dmg2.value);
+    		if (document.forms.form4.elements.Dmg2.value != "")
+    			dmgH = dmgH + eval(document.forms.form4.elements.Dmg2.value);
+    		if (document.forms.form5.elements.Dmg2.value != "")
+    			dmgH = dmgH + eval(document.forms.form5.elements.Dmg2.value);
+    		if (document.forms.form6.elements.Dmg2.value != "")
+    			dmgH = dmgH + eval(document.forms.form6.elements.Dmg2.value);
+    		
+    
+    		
+    		document.forms.formS.elements.DmgL.value = dmgL.toFixed(2);
+    		document.forms.formS.elements.DmgE.value = dmgM.toFixed(2);
+    		document.forms.formS.elements.DmgH.value = dmgH.toFixed(2);
+    
+    	}
+    	// 数値のみを入力可能にする
+    	function key_down(get_code,get_no){
+    	 if ( get_code == 13 ) 
+    	 	culc_dmg(get_no);
+         return true;
+      	}
+      	
+    	function culc_defp() {	//┌────────←代入される←────────┐
+    		defp = 0.0;
+    		lva = 0.0;
+    		
+    		lva = 1 + eval(document.forms.form7.elements.LV.value)/100;
+    		pow = document.forms.form7.elements.ATK.value * document.forms.form7.elements.ATK.value;
+    		pow = pow * lva;
+    		dmg = document.forms.form7.elements.Dmg.value;
+    
+    		if (document.forms.form7.elements.WEP.value == "素手") {
+    			dmg = dmg / 1.00; }
+    
+    		if (document.forms.form7.elements.WEP.value == "格闘") {
+    			dmg = dmg / 1.15; }
+    
+    		pow = pow * 0.925
+    		pow = pow * (1 + document.forms.form7.elements.Killer.value / 100);
+    		pow = pow * (document.forms.form7.elements.Wst.value / 100);
+    		wdp = 1 - (document.forms.form7.elements.Wdp.value / 100);
+    		pow = pow * wdp;
+    		pow = pow * (1 + document.forms.form7.elements.LBup.value / 100);
+    		pow = pow * (1 + document.forms.form7.elements.EoP.value / 100);
+    		pow = pow * (1 + document.forms.form7.elements.EoB.value / 100);
+    		pow = pow * (1 + document.forms.form7.elements.EST.value / 100);
+    		pow = pow * (1 + document.forms.form7.elements.EDM.value / 100);
+    		pow = pow * (1 - document.forms.form7.elements.Ele.value / 100);
+    		brk = document.forms.form7.elements.Break.value - document.forms.form7.elements.Buff.value;
+    		brk = 1 - (brk / 100);
+    		brk = 1 / brk;
+    		pow = pow * brk;
+    
+    		defp = pow / dmg;
+    		document.forms.form7.elements.Defp.value = defp.toFixed(2);
+    	}
+    	// 数値のみを入力可能にする
+    	function key_down2(get_code){
+    	 if ( get_code == 13 )
+    	 	culc_defp();
+         return true;
+      	}
+    
+    	function culc_INbuff() {	//┌────────←代入される←────────┐
+    		
+    		INbuffA = eval(document.forms.form8.elements.DbuffDmg.value) - eval(document.forms.form8.elements.NormalDmg.value);
+    		INbuffB = eval(document.forms.form8.elements.DbuffPer.value) / 100;
+    		INbuffC = eval(document.forms.form8.elements.DbuffDmg.value) * INbuffB;
+    		INbuffD = INbuffC / INbuffA;
+    		INbuff = (INbuffD - 1) * 100;
+    		document.forms.form8.elements.INbuff.value = INbuff.toFixed(2);
+    
+    		if ( INbuff < 1 ) {document.forms.form8.elements.INbuff.value = 0}
+    		else if ( 1 <= INbuff && INbuff < 8 ) {document.forms.form8.elements.INbuff.value = 5}
+    		else if ( 8 <= INbuff && INbuff < 13 ) {document.forms.form8.elements.INbuff.value = 10}
+    		else if ( 13 <= INbuff && INbuff < 18 ) {document.forms.form8.elements.INbuff.value = 15}
+    		else if ( 18 <= INbuff && INbuff < 23 ) {document.forms.form8.elements.INbuff.value = 20}
+    		else if ( 23 <= INbuff && INbuff < 28 ) {document.forms.form8.elements.INbuff.value = 25}
+    		else if ( 28 <= INbuff && INbuff < 33 ) {document.forms.form8.elements.INbuff.value = 30}
+    		else if ( 33 <= INbuff && INbuff < 38 ) {document.forms.form8.elements.INbuff.value = 35}
+    		else if ( 38 <= INbuff && INbuff < 43 ) {document.forms.form8.elements.INbuff.value = 40}
+    		else if ( 43 <= INbuff && INbuff < 48 ) {document.forms.form8.elements.INbuff.value = 45}
+    		else if ( 48 <= INbuff && INbuff < 53 ) {document.forms.form8.elements.INbuff.value = 50}
+    		else if ( 53 <= INbuff && INbuff < 58 ) {document.forms.form8.elements.INbuff.value = 55}
+    		else if ( 58 <= INbuff && INbuff < 63 ) {document.forms.form8.elements.INbuff.value = 60}
+    		else if ( 63 <= INbuff && INbuff < 68 ) {document.forms.form8.elements.INbuff.value = 65}
+    		else if ( 68 <= INbuff && INbuff < 73 ) {document.forms.form8.elements.INbuff.value = 70}
+    		else if ( 73 <= INbuff && INbuff < 78 ) {document.forms.form8.elements.INbuff.value = 75}
+    		else if ( 78 <= INbuff && INbuff < 83 ) {document.forms.form8.elements.INbuff.value = 80}
+    		else if ( 83 <= INbuff && INbuff < 88 ) {document.forms.form8.elements.INbuff.value = 85}
+    		else if ( 88 <= INbuff && INbuff < 93 ) {document.forms.form8.elements.INbuff.value = 90}
+    		else if ( 93 <= INbuff && INbuff < 98 ) {document.forms.form8.elements.INbuff.value = 95}
+    		else if ( 98 <= INbuff && INbuff < 103 ) {document.forms.form8.elements.INbuff.value = 100}
+    
+    	}
+    	// 数値のみを入力可能にする
+    	function key_down2(get_code){
+    	 if ( get_code == 13 )
+    	 	culc_INbuff();
+         return true;
+      	}
+      // 各入力フォームReset
+      function formReset() {
+        document.form.reset();
+      }
+    	// -->
+  </script>
 </head>
-
 <body>
   <h1>FFBEダメージ計算機
     <font color="red">
-      <font size="4">※2024年8月8日以降ver※</font>
+      <font size="4">※2021年9月10日以降ver※</font>
     </font>
+    </br>
   </h1>
-  <h2>使い方(
-    <a href="https://youtu.be/V-QWHz8x8dI">説明動画はこちら</a>)
+  <h2>使い方(<a href="https://youtu.be/V-QWHz8x8dI">説明動画はこちら</a>)
     <font color="red">
       <font size="2">2022年7月7日更新</font>
     </font>
   </h2>
   <p>
-    <font size="2">１．計算欄下にある注釈を参考の上、各パラメータを入力してください(
-      <a href="http://nogameno.life.coocan.jp/ffbe_def_list.htm">強敵防御値一覧</a>)
-      <br>２．半角数字で入力してください
-      <br>３．各武器補正値については最下部をご覧ください
-      <br>
-    </font>
+    <font size="2"> １．計算欄下にある注釈を参考の上、各パラメータを入力してください<br/>
+ ２．半角数字で入力してください<br/>
+ ３．各武器補正値については最下部をご覧ください<br/>
+ ４．下記DVS系ボスの防御値/精神値は計測ミスの場合もありますので参考程度にご活用ください<br/>
+</font>
+</font>
   </p>
   <h2>《ダメージ計算》
     <font color="red">
-      <font size="4">
-        <font color="black">
-          <font size="2">　※計測ミスの場合もありますので参考程度にご活用下さい※
-            <br>
-          </font>
+      <font size="4">　更新停止(2024/07/24)　</font>
+      <font size="2">※復帰未定※</font></font><br/></p>
+  <style>
+    .leftspace{
+     margin-left: 339px;
+    }
+  </style>
         </font>
       </font>
     </font>
+   </font>
   </h2>
-  <p></p>
-  <table>
-<tr>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">LV</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">武器種</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">Atk</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">特効</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">倍率</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">無視</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">LB</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">EoP</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">EoB</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">Jmp</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">EST</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">EDM</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">属耐</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">武耐</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">防御値</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">デバフ</span>
-  </td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">敵バフ</span>
-  </td>
-  <td></td>
-  <td style="text-align: center;">
-    <span style="font-size: 12px;">予想ダメージ(最小-期待値-最大)</span>
-  </td>
-</tr>
-
-    <tr>
-<tr>
-  <form action="#" name="form1">
-    <td>
-      <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="1" size="1.5">
-    </td>
-    <td>
-      <select id="WEP1" name="WEP" tabindex="2" onchange="handleClick('WEP1')"></select>
-    </td>
-    <td>
-      <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="3" size="3">
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="6" size="2">
-        <span class="tooltiptext">※特効欄=キラー率(対象が複種族の場合は種族数に合わせて適宜除算)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="7" size="6">
-        <span class="tooltiptext">※倍率欄=アビリティorLB倍率(15000%なら15000と記入)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="8" size="2">
-        <span class="tooltiptext">※無視欄には攻撃アビ効果に"相手の防御or精神or魔法防御を○○%無効"などがある場合に記入</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="9" size="2">
-        <span class="tooltiptext">※LB欄=LBダメージアップ率</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="10" size="2">
-        <span class="tooltiptext">※EoP欄=ダークビジョンズ系でのパーティ属性ダメージアップ率("10"と記入)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="11" size="2">
-        <span class="tooltiptext">※EoB欄=バフおよびエリア効果での属性ダメージアップ率(加算して記入)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="12" size="2">
-        <span class="tooltiptext">※Jmp欄=ジャンプダメージアップ率</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="13" size="2">
-        <span class="tooltiptext">※EST欄=幻獣ダメージ</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="14" size="2">
-        <span class="tooltiptext">※EDM欄=召喚ダメージ</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="15" size="2">
-        <span class="tooltiptext">※属耐欄=属性耐性値(弱点の場合はマイナス"-"を付けて記入)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="16" size="2">
-        <span class="tooltiptext">※武耐欄=武器耐性値(ダウンの場合はマイナス"-"を付けて記入)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="17" size="6">
-        <span class="tooltiptext">※防御値欄のデフォルト値250は不倒の木兵の防御値および精神値と同等</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="18" size="2">
-        <span class="tooltiptext">※デバフ欄には各種防御系デバフ率を記入(ヒカセンのアマイレなら45、病気なら10など)</span>
-      </div>
-    </td>
-    <td>
-      <div class="tooltip">
-        <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="19" size="2">
-        <span class="tooltiptext">※敵バフ欄には各種バフ率を合算で記入(内部防御バフ60%+後掛け防御バフ30%なら90など)</span>
-      </div>
-    </td>
-    <td>
-<input type="button" value="計算" onclick="culc_dmg(this.form);" tabindex="20">
-      <input type="button" value="リセット" onclick="reset();" tabindex="21">
-    </td>
-    <td>
-      <input type="text" name="Dmg1" value="" size="10">~
-      <input type="text" name="DmgM" value="" size="10">~
-      <input type="text" name="Dmg2" value="" size="10">
-    </td>
-  </form>
-</tr>
-
-    </tr>
-    <tr>
-      <form action="#" name="form2">
+  <p>
+    <table>
+      <tr>
         <td>
-          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="29" size="1.5">
-        </td>
+          <font size="2"> LV </td>
         <td>
-<select id="WEP2" name="WEP" tabindex="29" onchange="handleClick('WEP2')"></select>
-        </td>
+          <font size="2"> 武器種 </td>
         <td>
-          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="32" size="3">
-        </td>
+          <font size="2"> Atk　 　 </td>
         <td>
-          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="35" size="2">
-        </td>
+          <font size="2"> 特効　 </td>
         <td>
-          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="36" size="6">
-        </td>
+          <font size="2"> 倍率　　 </td>
         <td>
-          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="37" size="2">
-        </td>
+          <font size="2"> 無視　 </td>
         <td>
-          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="38" size="2">
-        </td>
+          <font size="2"> LB　 </td>
         <td>
-          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="39" size="2">
-        </td>
+          <font size="2"> EoP　 </td>
         <td>
-          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="40" size="2">
-        </td>
+          <font size="2"> EoB　 </td>
         <td>
-          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="41" size="2">
-        </td>
+          <font size="2"> CDU　 </td>
         <td>
-          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="42" size="2">
-        </td>
+          <font size="2"> Jmp　 </td>
         <td>
-          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="43" size="2">
-        </td>
+          <font size="2"> EST　 </td>
         <td>
-          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="44" size="2">
-        </td>
+          <font size="2"> EDM　 </td>
         <td>
-          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="45" size="2">
-        </td>
+          <font size="2"> 属耐　 </td>
         <td>
-          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="46" size="6">
-        </td>
+          <font size="2"> 武耐　 </td>
         <td>
-          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="47" size="2">
-        </td>
+          <font size="2"> 防御値 </td>
         <td>
-          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="48" size="2">
-        </td>
+          <font size="2"> デバフ </td>
         <td>
-          <input type="button" value="計算" onclick="culc_dmg(2);" tabindex="49">
-          <input type="button" value="リセット" onclick="reset()" tabindex="50">
-        </td>
-        <td>
-          <input type="text" name="Dmg1" value="" size="10">~
-          <input type="text" name="DmgM" value="" size="10">~
-          <input type="text" name="Dmg2" value="" size="10">
-        </td>
+          <font size="2"> 敵バフ </td>
+        <td><td>
+          <font size="2"> 予想ダメージ(最小-期待値-最大) </tr>
+      <tr>
+        <form action="#" name="form1">
+          <td> <input type="text" name="LV" value="140" onkeyDown="return key_down(event.keyCode,1)" tabindex="1" size="2"> </td>
+          <td> <select name="WEP" tabindex="2">
+				<option value="素手">素手</option>
+				<option value="短剣">短剣</option>
+				<option value="TH短剣">短剣(両手武具)</option>
+				<option value="剣">剣</option>
+				<option value="TH剣">剣(両手武具)</option>
+				<option value="大剣">大剣</option>
+				<option value="TH大剣">大剣(両手武具)</option>
+				<option value="Dアポ">大剣(Dｱﾎﾟｶﾘﾌﾟｽ)</option>
+				<option value="刀">刀</option>
+				<option value="TH刀">刀(両手武具)</option>
+				<option value="杖">杖</option>
+				<option value="TH杖">杖(両手武具)</option>
+				<option value="ロッド">ﾛｯﾄﾞ</option>
+				<option value="THロッド">ﾛｯﾄﾞ(両手武具)</option>
+				<option value="弓">弓</option>
+				<option value="斧">斧</option>
+				<option value="TH斧">斧(両手武具)</option>
+				<option value="ハンマー">ﾊﾝﾏｰ</option>
+				<option value="THハンマー">ﾊﾝﾏｰ(両手武具)</option>
+				<option value="槍">槍</option>
+				<option value="TH槍">槍(両手武具)</option>
+				<option value="THJMP">ｼﾞｬﾝﾌﾟ(両手武具)</option>
+				<option value="楽器">楽器</option>
+				<option value="TH楽器">楽器(両手武具)</option>
+				<option value="鞭">鞭</option>
+				<option value="TH鞭">鞭(両手武具)</option>
+				<option value="投擲">投擲</option>
+				<option value="TH投擲">投擲(両手武具)</option>
+				<option value="銃">銃</option>
+				<option value="TH銃">銃(両手武具)</option>
+				<option value="メイス">ﾒｲｽ</option>
+				<option value="THメイス">ﾒｲｽ(両手武具)</option>
+				<option value="格闘">格闘</option>
+				<option value="TH格闘">格闘(両手武具)</option>
+				<option value="カリパー">ｴｸｽｶﾘﾊﾟｰ(FF5)</option>
+				<option value="セイバー">ｿｳﾙｾｲﾊﾞｰ(FF6)</option>
+				<option value="レッド">ﾚｯﾄﾞｿｰﾄﾞ(FF2)</option>
+				<option value="咎人">咎人の剣</option>
+				<option value="クアール">ｸｱｰﾙｳｨｯﾌﾟ</option>
+				<option value="イカサマ">ｲｶｻﾏﾀﾞｲｽ</option>
+				<option value="イカサマ+1汎用">ｲｶｻﾏ+1(汎用)</option>
+				<option value="イカサマ+1専用">ｲｶｻﾏ+1(ｾｯﾂｧｰ)</option>
+				<option value="ザイル">ｻﾞｲﾙｷｬﾉﾝ</option>
+				</select> </td>
+          <td><input type="text" name="ATK" value="300" onkeydown="return key_down(event.keyCode,1)" tabindex="3" size="4">
+            <td>
+              <div class="tooltip"> <input type="text" name="Killer" value="0" onkeydown="return key_down(event.keyCode,1)" tabindex="6" size="2"> <span class="tooltiptext">※特効欄=キラー率(対象が複種族の場合は種族数に合わせて適宜除算)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"><input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="7" size="6"> <span class="tooltiptext">※倍率欄=アビリティorLB倍率(15000%なら15000と記入)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"><input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="8" size="2"> <span class="tooltiptext">※無視欄には攻撃アビ効果に"相手の防御or精神or魔法防御を○○%無効"などがある場合に記入</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"><input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="9" size="3"> <span class="tooltiptext">※LB欄=LBダメージアップ率</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="10" size="2"> <span class="tooltiptext">※EoP欄=ダークビジョンズ系でのパーティ属性ダメージアップ率("10"と記入)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="11" size="2"> <span class="tooltiptext">※EoB欄=バフおよびエリア効果での属性ダメージアップ率(加算して記入)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="CDU" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="12" size="2"> <span class="tooltiptext">※CDU欄=カテゴリーダメージアップでのダメージアップ率(30%なら30と記入)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="Jmp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="13" size="2"> <span class="tooltiptext">※Jmp欄=ジャンプダメージアップ率</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="14" size="2"> <span class="tooltiptext">※EST欄=幻獣ダメージ</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="15" size="2"> <span class="tooltiptext">※EDM欄=召喚ダメージ</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="16" size="3"> <span class="tooltiptext">※属耐欄=属性耐性値(弱点の場合はマイナス"-"を付けて記入)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="Wre" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="17" size="2"> <span class="tooltiptext">※武耐欄=武器耐性値(ダウンの場合はマイナス"-"を付けて記入)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="Defp" value="250" onkeyDown="return key_down(event.keyCode,1)" tabindex="18" size="7"> <span class="tooltiptext">※防御値欄のデフォルト値250は不倒の木兵の防御値および精神値と同等</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="19" size="2"> <span class="tooltiptext">※デバフ欄には各種防御系デバフ率を記入(ヒカセンのアマイレなら45、病気なら10など)</span> </div>
+            </td>
+            <td>
+              <div class="tooltip"> <input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="20" size="2"> <span class="tooltiptext">※敵バフ欄には各種バフ率を合算で記入(内部防御バフ60%+後掛け防御バフ30%なら90など)</span> </div>
+            </td>
+            <td> <input type="button" value="計算" onclick="culc_dmg(1);" tabindex="21"> <input type="button" value="Reset" onclick="reset();" tabindex="22"> </td>
+            <td> <input type="text" name="Dmg1" value="" size="10"> ~ <input type="text" name="DmgM" value="" size="10"> ~ <input type="text" name="Dmg2" value="" size="10"> </td>
+        </form>
+      </tr>
+      <tr>
+        <form action="#" name="form2">
+          <td> <input type="text" name="LV" value="140" onkeyDown="return key_down(event.keyCode,1)" tabindex="29" size="2"> </td>
+          <td> <select name="WEP" tabindex="30">
+				<option value="素手">素手</option>
+				<option value="短剣">短剣</option>
+				<option value="TH短剣">短剣(両手武具)</option>
+				<option value="剣">剣</option>
+				<option value="TH剣">剣(両手武具)</option>
+				<option value="大剣">大剣</option>
+				<option value="TH大剣">大剣(両手武具)</option>
+				<option value="Dアポ">大剣(Dｱﾎﾟｶﾘﾌﾟｽ)</option>
+				<option value="刀">刀</option>
+				<option value="TH刀">刀(両手武具)</option>
+				<option value="杖">杖</option>
+				<option value="TH杖">杖(両手武具)</option>
+				<option value="ロッド">ﾛｯﾄﾞ</option>
+				<option value="THロッド">ﾛｯﾄﾞ(両手武具)</option>
+				<option value="弓">弓</option>
+				<option value="斧">斧</option>
+				<option value="TH斧">斧(両手武具)</option>
+				<option value="ハンマー">ﾊﾝﾏｰ</option>
+				<option value="THハンマー">ﾊﾝﾏｰ(両手武具)</option>
+				<option value="槍">槍</option>
+				<option value="TH槍">槍(両手武具)</option>
+				<option value="THJMP">ｼﾞｬﾝﾌﾟ(両手武具)</option>
+				<option value="楽器">楽器</option>
+				<option value="TH楽器">楽器(両手武具)</option>
+				<option value="鞭">鞭</option>
+				<option value="TH鞭">鞭(両手武具)</option>
+				<option value="投擲">投擲</option>
+				<option value="TH投擲">投擲(両手武具)</option>
+				<option value="銃">銃</option>
+				<option value="TH銃">銃(両手武具)</option>
+				<option value="メイス">ﾒｲｽ</option>
+				<option value="THメイス">ﾒｲｽ(両手武具)</option>
+				<option value="格闘">格闘</option>
+				<option value="TH格闘">格闘(両手武具)</option>
+				<option value="カリパー">ｴｸｽｶﾘﾊﾟｰ(FF5)</option>
+				<option value="セイバー">ｿｳﾙｾｲﾊﾞｰ(FF6)</option>
+				<option value="レッド">ﾚｯﾄﾞｿｰﾄﾞ(FF2)</option>
+				<option value="咎人">咎人の剣</option>
+				<option value="クアール">ｸｱｰﾙｳｨｯﾌﾟ</option>
+				<option value="イカサマ">ｲｶｻﾏﾀﾞｲｽ</option>
+				<option value="イカサマ+1汎用">ｲｶｻﾏ+1(汎用)</option>
+				<option value="イカサマ+1専用">ｲｶｻﾏ+1(ｾｯﾂｧｰ)</option>
+				<option value="ザイル">ｻﾞｲﾙｷｬﾉﾝ</option>
+				</select> </td>
+          <td> <input type="text" name="ATK" value="300" onkeyDown="return key_down(event.keyCode,1)" tabindex="32" size="4"> </td>
+          <td> <input type="text" name="Killer" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="35" size="2"> </td>
+          <td> <input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="36" size="6"> </td>
+          <td> <input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="37" size="2"> </td>
+          <td> <input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="38" size="3"> </td>
+          <td> <input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="39" size="2"> </td>
+          <td> <input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="40" size="2"> </td>
+          <td> <input type="text" name="CDU" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="41" size="2"> </td>
+          <td> <input type="text" name="Jmp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="42" size="2"> </td>
+          <td> <input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="43" size="2"> </td>
+          <td> <input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="44" size="2"> </td>
+          <td> <input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="45" size="3"> </td>
+          <td> <input type="text" name="Wre" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="46" size="2"> </td>
+          <td> <input type="text" name="Defp" value="250" onkeyDown="return key_down(event.keyCode,1)" tabindex="47" size="7"> </td>
+          <td> <input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="48" size="2"> </td>
+          <td> <input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="49" size="2"> </td>
+          <td> <input type="button" value="計算" onclick="culc_dmg(2);" tabindex="50"> <input type="button" value="Reset" onclick="reset()" tabindex="51"> </td>
+          <td> <input type="text" name="Dmg1" value="" size="10"> ~ <input type="text" name="DmgM" value="" size="10"> ~ <input type="text" name="Dmg2" value="" size="10"> </td>
+        </form>
+      </tr>
+      <tr>
+        <form action="#" name="form3">
+          <td> <input type="text" name="LV" value="140" onkeyDown="return key_down(event.keyCode,1)" tabindex="59" size="2"> </td>
+          <td> <select name="WEP" tabindex="60">
+				<option value="素手">素手</option>
+				<option value="短剣">短剣</option>
+				<option value="TH短剣">短剣(両手武具)</option>
+				<option value="剣">剣</option>
+				<option value="TH剣">剣(両手武具)</option>
+				<option value="大剣">大剣</option>
+				<option value="TH大剣">大剣(両手武具)</option>
+				<option value="Dアポ">大剣(Dｱﾎﾟｶﾘﾌﾟｽ)</option>
+				<option value="刀">刀</option>
+				<option value="TH刀">刀(両手武具)</option>
+				<option value="杖">杖</option>
+				<option value="TH杖">杖(両手武具)</option>
+				<option value="ロッド">ﾛｯﾄﾞ</option>
+				<option value="THロッド">ﾛｯﾄﾞ(両手武具)</option>
+				<option value="弓">弓</option>
+				<option value="斧">斧</option>
+				<option value="TH斧">斧(両手武具)</option>
+				<option value="ハンマー">ﾊﾝﾏｰ</option>
+				<option value="THハンマー">ﾊﾝﾏｰ(両手武具)</option>
+				<option value="槍">槍</option>
+				<option value="TH槍">槍(両手武具)</option>
+				<option value="THJMP">ｼﾞｬﾝﾌﾟ(両手武具)</option>
+				<option value="楽器">楽器</option>
+				<option value="TH楽器">楽器(両手武具)</option>
+				<option value="鞭">鞭</option>
+				<option value="TH鞭">鞭(両手武具)</option>
+				<option value="投擲">投擲</option>
+				<option value="TH投擲">投擲(両手武具)</option>
+				<option value="銃">銃</option>
+				<option value="TH銃">銃(両手武具)</option>
+				<option value="メイス">ﾒｲｽ</option>
+				<option value="THメイス">ﾒｲｽ(両手武具)</option>
+				<option value="格闘">格闘</option>
+				<option value="TH格闘">格闘(両手武具)</option>
+				<option value="カリパー">ｴｸｽｶﾘﾊﾟｰ(FF5)</option>
+				<option value="セイバー">ｿｳﾙｾｲﾊﾞｰ(FF6)</option>
+				<option value="レッド">ﾚｯﾄﾞｿｰﾄﾞ(FF2)</option>
+				<option value="咎人">咎人の剣</option>
+				<option value="クアール">ｸｱｰﾙｳｨｯﾌﾟ</option>
+				<option value="イカサマ">ｲｶｻﾏﾀﾞｲｽ</option>
+				<option value="イカサマ+1汎用">ｲｶｻﾏ+1(汎用)</option>
+				<option value="イカサマ+1専用">ｲｶｻﾏ+1(ｾｯﾂｧｰ)</option>
+				<option value="ザイル">ｻﾞｲﾙｷｬﾉﾝ</option>
+				</select> </td>
+          <td> <input type="text" name="ATK" value="300" onkeyDown="return key_down(event.keyCode,1)" tabindex="62" size="4"> </td>
+          <td> <input type="text" name="Killer" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="65" size="2"> </td>
+          <td> <input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="66" size="6"> </td>
+          <td> <input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="67" size="2"> </td>
+          <td> <input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="68" size="3"> </td>
+          <td> <input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="69" size="2"> </td>
+          <td> <input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="70" size="2"> </td>
+          <td> <input type="text" name="CDU" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="71" size="2"> </td>
+          <td> <input type="text" name="Jmp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="72" size="2"> </td>
+          <td> <input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="73" size="2"> </td>
+          <td> <input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="74" size="2"> </td>
+          <td> <input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="75" size="3"> </td>
+          <td> <input type="text" name="Wre" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="76" size="2"> </td>
+          <td> <input type="text" name="Defp" value="250" onkeyDown="return key_down(event.keyCode,1)" tabindex="77" size="7"> </td>
+          <td> <input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="78" size="2"> </td>
+          <td> <input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="79" size="2"> </td>
+          <td> <input type="button" value="計算" onclick="culc_dmg(3);" tabindex="80"> <input type="button" value="Reset" onclick="reset()" tabindex="81"> </td>
+          <td> <input type="text" name="Dmg1" value="" size="10"> ~ <input type="text" name="DmgM" value="" size="10"> ~ <input type="text" name="Dmg2" value="" size="10"> </td>
+        </form>
+      </tr>
+      <tr>
+        <form action="#" name="form4">
+          <td> <input type="text" name="LV" value="140" onkeyDown="return key_down(event.keyCode,1)" tabindex="89" size="2"> </td>
+          <td> <select name="WEP" tabindex="90">
+				<option value="素手">素手</option>
+				<option value="短剣">短剣</option>
+				<option value="TH短剣">短剣(両手武具)</option>
+				<option value="剣">剣</option>
+				<option value="TH剣">剣(両手武具)</option>
+				<option value="大剣">大剣</option>
+				<option value="TH大剣">大剣(両手武具)</option>
+				<option value="Dアポ">大剣(Dｱﾎﾟｶﾘﾌﾟｽ)</option>
+				<option value="刀">刀</option>
+				<option value="TH刀">刀(両手武具)</option>
+				<option value="杖">杖</option>
+				<option value="TH杖">杖(両手武具)</option>
+				<option value="ロッド">ﾛｯﾄﾞ</option>
+				<option value="THロッド">ﾛｯﾄﾞ(両手武具)</option>
+				<option value="弓">弓</option>
+				<option value="斧">斧</option>
+				<option value="TH斧">斧(両手武具)</option>
+				<option value="ハンマー">ﾊﾝﾏｰ</option>
+				<option value="THハンマー">ﾊﾝﾏｰ(両手武具)</option>
+				<option value="槍">槍</option>
+				<option value="TH槍">槍(両手武具)</option>
+				<option value="THJMP">ｼﾞｬﾝﾌﾟ(両手武具)</option>
+				<option value="楽器">楽器</option>
+				<option value="TH楽器">楽器(両手武具)</option>
+				<option value="鞭">鞭</option>
+				<option value="TH鞭">鞭(両手武具)</option>
+				<option value="投擲">投擲</option>
+				<option value="TH投擲">投擲(両手武具)</option>
+				<option value="銃">銃</option>
+				<option value="TH銃">銃(両手武具)</option>
+				<option value="メイス">ﾒｲｽ</option>
+				<option value="THメイス">ﾒｲｽ(両手武具)</option>
+				<option value="格闘">格闘</option>
+				<option value="TH格闘">格闘(両手武具)</option>
+				<option value="カリパー">ｴｸｽｶﾘﾊﾟｰ(FF5)</option>
+				<option value="セイバー">ｿｳﾙｾｲﾊﾞｰ(FF6)</option>
+				<option value="レッド">ﾚｯﾄﾞｿｰﾄﾞ(FF2)</option>
+				<option value="咎人">咎人の剣</option>
+				<option value="クアール">ｸｱｰﾙｳｨｯﾌﾟ</option>
+				<option value="イカサマ">ｲｶｻﾏﾀﾞｲｽ</option>
+				<option value="イカサマ+1汎用">ｲｶｻﾏ+1(汎用)</option>
+				<option value="イカサマ+1専用">ｲｶｻﾏ+1(ｾｯﾂｧｰ)</option>
+				<option value="ザイル">ｻﾞｲﾙｷｬﾉﾝ</option>
+				</select> </td>
+          <td> <input type="text" name="ATK" value="300" onkeyDown="return key_down(event.keyCode,1)" tabindex="92" size="4"> </td>
+          <td> <input type="text" name="Killer" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="95" size="2"> </td>
+          <td> <input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="96" size="6"> </td>
+          <td> <input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="97" size="2"> </td>
+          <td> <input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="98" size="3"> </td>
+          <td> <input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="99" size="2"> </td>
+          <td> <input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="100" size="2"> </td>
+          <td> <input type="text" name="CDU" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="101" size="2"> </td>
+          <td> <input type="text" name="Jmp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="102" size="2"> </td>
+          <td> <input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="103" size="2"> </td>
+          <td> <input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="104" size="2"> </td>
+          <td> <input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="105" size="3"> </td>
+          <td> <input type="text" name="Wre" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="106" size="2"> </td>
+          <td> <input type="text" name="Defp" value="250" onkeyDown="return key_down(event.keyCode,1)" tabindex="107" size="7"> </td>
+          <td> <input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="108" size="2"> </td>
+          <td> <input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="109" size="2"> </td>
+          <td> <input type="button" value="計算" onclick="culc_dmg(4);" tabindex="110"> <input type="button" value="Reset" onclick="reset()" tabindex="111"> </td>
+          <td> <input type="text" name="Dmg1" value="" size="10"> ~ <input type="text" name="DmgM" value="" size="10"> ~ <input type="text" name="Dmg2" value="" size="10"> </td>
+        </form>
+      </tr>
+      <tr>
+        <form action="#" name="form5">
+          <td> <input type="text" name="LV" value="140" onkeyDown="return key_down(event.keyCode,1)" tabindex="119" size="2"> </td>
+          <td> <select name="WEP" tabindex="120">
+				<option value="素手">素手</option>
+				<option value="短剣">短剣</option>
+				<option value="TH短剣">短剣(両手武具)</option>
+				<option value="剣">剣</option>
+				<option value="TH剣">剣(両手武具)</option>
+				<option value="大剣">大剣</option>
+				<option value="TH大剣">大剣(両手武具)</option>
+				<option value="Dアポ">大剣(Dｱﾎﾟｶﾘﾌﾟｽ)</option>
+				<option value="刀">刀</option>
+				<option value="TH刀">刀(両手武具)</option>
+				<option value="杖">杖</option>
+				<option value="TH杖">杖(両手武具)</option>
+				<option value="ロッド">ﾛｯﾄﾞ</option>
+				<option value="THロッド">ﾛｯﾄﾞ(両手武具)</option>
+				<option value="弓">弓</option>
+				<option value="斧">斧</option>
+				<option value="TH斧">斧(両手武具)</option>
+				<option value="ハンマー">ﾊﾝﾏｰ</option>
+				<option value="THハンマー">ﾊﾝﾏｰ(両手武具)</option>
+				<option value="槍">槍</option>
+				<option value="TH槍">槍(両手武具)</option>
+				<option value="THJMP">ｼﾞｬﾝﾌﾟ(両手武具)</option>
+				<option value="楽器">楽器</option>
+				<option value="TH楽器">楽器(両手武具)</option>
+				<option value="鞭">鞭</option>
+				<option value="TH鞭">鞭(両手武具)</option>
+				<option value="投擲">投擲</option>
+				<option value="TH投擲">投擲(両手武具)</option>
+				<option value="銃">銃</option>
+				<option value="TH銃">銃(両手武具)</option>
+				<option value="メイス">ﾒｲｽ</option>
+				<option value="THメイス">ﾒｲｽ(両手武具)</option>
+				<option value="格闘">格闘</option>
+				<option value="TH格闘">格闘(両手武具)</option>
+				<option value="カリパー">ｴｸｽｶﾘﾊﾟｰ(FF5)</option>
+				<option value="セイバー">ｿｳﾙｾｲﾊﾞｰ(FF6)</option>
+				<option value="レッド">ﾚｯﾄﾞｿｰﾄﾞ(FF2)</option>
+				<option value="咎人">咎人の剣</option>
+				<option value="クアール">ｸｱｰﾙｳｨｯﾌﾟ</option>
+				<option value="イカサマ">ｲｶｻﾏﾀﾞｲｽ</option>
+				<option value="イカサマ+1汎用">ｲｶｻﾏ+1(汎用)</option>
+				<option value="イカサマ+1専用">ｲｶｻﾏ+1(ｾｯﾂｧｰ)</option>
+				<option value="ザイル">ｻﾞｲﾙｷｬﾉﾝ</option>
+				</select> </td>
+          <td> <input type="text" name="ATK" value="300" onkeyDown="return key_down(event.keyCode,1)" tabindex="122" size="4"> </td>
+          <td> <input type="text" name="Killer" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="125" size="2"> </td>
+          <td> <input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="126" size="6"> </td>
+          <td> <input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="127" size="2"> </td>
+          <td> <input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="128" size="3"> </td>
+          <td> <input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="129" size="2"> </td>
+          <td> <input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="130" size="2"> </td>
+          <td> <input type="text" name="CDU" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="131" size="2"> </td>
+          <td> <input type="text" name="Jmp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="132" size="2"> </td>
+          <td> <input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="133" size="2"> </td>
+          <td> <input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="134" size="2"> </td>
+          <td> <input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="135" size="3"> </td>
+          <td> <input type="text" name="Wre" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="136" size="2"> </td>
+          <td> <input type="text" name="Defp" value="250" onkeyDown="return key_down(event.keyCode,1)" tabindex="137" size="7"> </td>
+          <td> <input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="138" size="2"> </td>
+          <td> <input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="139" size="2"> </td>
+          <td> <input type="button" value="計算" onclick="culc_dmg(5);" tabindex="140"> <input type="button" value="Reset" onclick="reset()" tabindex="141"> </td>
+          <td> <input type="text" name="Dmg1" value="" size="10"> ~ <input type="text" name="DmgM" value="" size="10"> ~ <input type="text" name="Dmg2" value="" size="10"> </td>
+        </form>
+      </tr>
+      <tr>
+        <form action="#" name="form6">
+          <td><input type="text" name="LV" value="140" onkeyDown="return key_down(event.keyCode,1)" tabindex="149" size="2"></td>
+          <td> <select name="WEP" tabindex="150">
+            <option value="素手">素手</option>
+            <option value="短剣">短剣</option>
+            <option value="TH短剣">短剣(両手武具)</option>
+            <option value="剣">剣</option>
+            <option value="TH剣">剣(両手武具)</option>
+            <option value="大剣">大剣</option>
+            <option value="TH大剣">大剣(両手武具)</option>
+            <option value="Dアポ">大剣(Dｱﾎﾟｶﾘﾌﾟｽ)</option>
+            <option value="刀">刀</option>
+            <option value="TH刀">刀(両手武具)</option>
+            <option value="杖">杖</option>
+            <option value="TH杖">杖(両手武具)</option>
+            <option value="ロッド">ﾛｯﾄﾞ</option>
+            <option value="THロッド">ﾛｯﾄﾞ(両手武具)</option>
+            <option value="弓">弓</option>
+            <option value="斧">斧</option>
+            <option value="TH斧">斧(両手武具)</option>
+            <option value="ハンマー">ﾊﾝﾏｰ</option>
+            <option value="THハンマー">ﾊﾝﾏｰ(両手武具)</option>
+            <option value="槍">槍</option>
+            <option value="TH槍">槍(両手武具)</option>
+            <option value="THJMP">ｼﾞｬﾝﾌﾟ(両手武具)</option>
+            <option value="楽器">楽器</option>
+            <option value="TH楽器">楽器(両手武具)</option>
+            <option value="鞭">鞭</option>
+            <option value="TH鞭">鞭(両手武具)</option>
+            <option value="投擲">投擲</option>
+            <option value="TH投擲">投擲(両手武具)</option>
+            <option value="銃">銃</option>
+            <option value="TH銃">銃(両手武具)</option>
+            <option value="メイス">ﾒｲｽ</option>
+            <option value="THメイス">ﾒｲｽ(両手武具)</option>
+            <option value="格闘">格闘</option>
+            <option value="TH格闘">格闘(両手武具)</option>
+            <option value="カリパー">ｴｸｽｶﾘﾊﾟｰ(FF5)</option>
+            <option value="セイバー">ｿｳﾙｾｲﾊﾞｰ(FF6)</option>
+            <option value="レッド">ﾚｯﾄﾞｿｰﾄﾞ(FF2)</option>
+            <option value="咎人">咎人の剣</option>
+            <option value="クアール">ｸｱｰﾙｳｨｯﾌﾟ</option>
+            <option value="イカサマ">ｲｶｻﾏﾀﾞｲｽ</option>
+            <option value="イカサマ+1汎用">ｲｶｻﾏ+1(汎用)</option>
+            <option value="イカサマ+1専用">ｲｶｻﾏ+1(ｾｯﾂｧｰ)</option>
+            <option value="ザイル">ｻﾞｲﾙｷｬﾉﾝ</option>
+          </select> </td>
+          <td><input type="text" name="ATK" value="300" onkeyDown="return key_down(event.keyCode,1)" tabindex="152" size="4"></td>
+          <td><input type="text" name="Killer" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="155" size="2"></td>
+          <td><input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="156" size="6"></td>
+          <td><input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="157" size="2"></td>
+          <td><input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="158" size="3"></td>
+          <td><input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="159" size="2"></td>
+          <td><input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="160" size="2"></td>
+          <td><input type="text" name="CDU" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="161" size="2"></td>
+          <td><input type="text" name="Jmp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="162" size="2"></td>
+          <td><input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="163" size="2"></td>
+          <td><input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="164" size="2"></td>
+          <td><input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="165" size="3"></td>
+          <td><input type="text" name="Wre" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="166" size="2"></td>
+          <td><input type="text" name="Defp" value="250" onkeyDown="return key_down(event.keyCode,1)" tabindex="167" size="7"></td>
+          <td><input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="168" size="2"></td>
+          <td><input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="169" size="2"></td>
+          <td><input type="button" value="計算" onclick="culc_dmg(6);" tabindex="170"> <input type="button" value="Reset" onclick="reset()" tabindex="171"> </td>
+          <td><input type="text" name="Dmg1" value="" size="10"> ~ <input type="text" name="DmgM" value="" size="10"> ~ <input type="text" name="Dmg2" value="" size="10"></td><br/> </tr>
       </form>
     </tr>
     <tr>
-      <form action="#" name="form3">
-        <td>
-          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="59" size="1.5">
-        </td>
-        <td>
-<select id="WEP3" name="WEP" tabindex="59" onchange="handleClick('WEP3')"></select>
-
-
-
-        </td>
-        <td>
-          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="62" size="3">
-        </td>
-        <td>
-          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="65" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="66" size="6">
-        </td>
-        <td>
-          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="67" size="2">
-        </td>
-        <td>
-          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="68" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="69" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="70" size="2">
-        </td>
-        <td>
-          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="71" size="2">
-        </td>
-        <td>
-          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="72" size="2">
-        </td>
-        <td>
-          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="73" size="2">
-        </td>
-        <td>
-          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="74" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="75" size="2">
-        </td>
-        <td>
-          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="76" size="6">
-        </td>
-        <td>
-          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="77" size="2">
-        </td>
-        <td>
-          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="78" size="2">
-        </td>
-        <td>
-          <input type="button" value="計算" onclick="culc_dmg(3);" tabindex="79">
-          <input type="button" value="リセット" onclick="reset()" tabindex="80">
-        </td>
-        <td>
-          <input type="text" name="Dmg1" value="" size="10">~
-          <input type="text" name="DmgM" value="" size="10">~
-          <input type="text" name="Dmg2" value="" size="10">
-        </td>
-      </form>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><button onclick="calculateTotal()" class="calculate-button" tabindex="200">合計値を計算</button></td>
+      <td><input type="text" id="resultDmg1" readonly style="width: 99px;"><span> ~ </span><input type="text" id="resultDmgM" readonly style="width: 99px;"><span> ~ </span><input type="text" id="resultDmg2" readonly style="width: 99px;"></td>
     </tr>
-    <tr>
-      <form action="#" name="form4">
-        <td>
-          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="89" size="1.5">
-        </td>
-        <td>
-<select id="WEP4" name="WEP" tabindex="89" onchange="handleClick('WEP4')"></select>
-
-
-          </select>
-        </td>
-        <td>
-          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="92" size="3">
-        </td>
-        <td>
-          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="95" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="96" size="6">
-        </td>
-        <td>
-          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="97" size="2">
-        </td>
-        <td>
-          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="98" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="99" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="100" size="2">
-        </td>
-        <td>
-          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="101" size="2">
-        </td>
-        <td>
-          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="102" size="2">
-        </td>
-        <td>
-          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="103" size="2">
-        </td>
-        <td>
-          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="104" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="105" size="2">
-        </td>
-        <td>
-          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="106" size="6">
-        </td>
-        <td>
-          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="107" size="2">
-        </td>
-        <td>
-          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="108" size="2">
-        </td>
-        <td>
-          <input type="button" value="計算" onclick="culc_dmg(4);" tabindex="109">
-          <input type="button" value="リセット" onclick="reset()" tabindex="110">
-        </td>
-        <td>
-          <input type="text" name="Dmg1" value="" size="10">~
-          <input type="text" name="DmgM" value="" size="10">~
-          <input type="text" name="Dmg2" value="" size="10">
-        </td>
-      </form>
-    </tr>
-    <tr>
-      <form action="#" name="form5">
-        <td>
-          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="119" size="1.5">
-        </td>
-        <td>
- <select id="WEP5" name="WEP" tabindex="119" onchange="handleClick('WEP5')"></select>
-
-
-        </td>
-        <td>
-          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="122" size="3">
-        </td>
-        <td>
-          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="125" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="126" size="6">
-        </td>
-        <td>
-          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="127" size="2">
-        </td>
-        <td>
-          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="128" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="129" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="130" size="2">
-        </td>
-        <td>
-          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="131" size="2">
-        </td>
-        <td>
-          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="132" size="2">
-        </td>
-        <td>
-          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="133" size="2">
-        </td>
-        <td>
-          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="134" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="135" size="2">
-        </td>
-        <td>
-          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="136" size="6">
-        </td>
-        <td>
-          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="137" size="2">
-        </td>
-        <td>
-          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="138" size="2">
-        </td>
-        <td>
-          <input type="button" value="計算" onclick="culc_dmg(5);" tabindex="139">
-          <input type="button" value="リセット" onclick="reset()" tabindex="140">
-        </td>
-        <td>
-          <input type="text" name="Dmg1" value="" size="10">~
-          <input type="text" name="DmgM" value="" size="10">~
-          <input type="text" name="Dmg2" value="" size="10">
-        </td>
-      </form>
-    </tr>
-    <tr>
-      <form action="#" name="form6">
-        <td>
-          <input type="text" name="LV" value="120" onkeydown="return key_down(click.keyCode,1)" tabindex="149" size="1.5">
-        </td>
-        <td>
-<select id="WEP6" name="WEP" tabindex="29" onchange="handleClick('WEP6')"></select>
-
-
-        </td>
-        <td>
-          <input type="text" name="ATK" value="300" onkeydown="return key_down(click.keyCode,1)" tabindex="152" size="3">
-        </td>
-        <td>
-          <input type="text" name="Killer" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="155" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wst" value="100" onkeydown="return key_down(click.keyCode,1)" tabindex="156" size="6">
-        </td>
-        <td>
-          <input type="text" name="Wdp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="157" size="2">
-        </td>
-        <td>
-          <input type="text" name="LBup" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="158" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoP" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="159" size="2">
-        </td>
-        <td>
-          <input type="text" name="EoB" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="160" size="2">
-        </td>
-        <td>
-          <input type="text" name="Jmp" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="161" size="2">
-        </td>
-        <td>
-          <input type="text" name="EST" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="162" size="2">
-        </td>
-        <td>
-          <input type="text" name="EDM" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="163" size="2">
-        </td>
-        <td>
-          <input type="text" name="Ele" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="164" size="2">
-        </td>
-        <td>
-          <input type="text" name="Wre" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="165" size="2">
-        </td>
-        <td>
-          <input type="text" name="Defp" value="250" onkeydown="return key_down(click.keyCode,1)" tabindex="166" size="6">
-        </td>
-        <td>
-          <input type="text" name="Break" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="167" size="2">
-        </td>
-        <td>
-          <input type="text" name="Buff" value="0" onkeydown="return key_down(click.keyCode,1)" tabindex="168" size="2">
-        </td>
-        <td>
-          <input type="button" value="計算" onclick="culc_dmg(6);" tabindex="169">
-          <input type="button" value="リセット" onclick="reset()" tabindex="170">
-        </td>
-        <td>
-          <input type="text" name="Dmg1" value="" size="10">~
-          <input type="text" name="DmgM" value="" size="10">~
-          <input type="text" name="Dmg2" value="" size="10">
-        </td>
-        <br>
-      </form>
-    </tr>
-    <tr>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      <td>
-      </td>
-      	  <td style="text-align: center;">
-    <span style="font-size: 12px;"><button onclick="calculateTotal()" class="calculate-button">合計値を計算</button></span>
-  </td>
-
-      <td>
-        <input type="text" id="resultDmg1" readonly style="width: 99px;">
-        <span>~</span>
-        <input type="text" id="resultDmgM" readonly style="width: 99px;">
-        <span>~</span>
-        <input type="text" id="resultDmg2" readonly style="width: 99px;">
-      </td>
-    </tr>
-  </table>
-  <font color="blue">
-    <font size="2">※Lv欄=ユニットレベル
-      <br>※武器種欄の最下部には独特の武器補正を持つ武器を列挙
-      <br>
-      <font color="red">
-        <font size="2">※魔力値or精神値依存攻撃の場合にも各武器種を選択(2022年01月20日より適用)
-          <br>※ただし固定値ダメージや持続ダメージには武器補正が適用されないので素手を選択
-          <br>※武器種"ジャンプ(両手武具)"は両手武具+ジャンプ攻撃時に選択
-          <br>
-        </font>
-
-  <script src="script.js"></script>
-
-  <script src="dmgTotal.js"></script>
-</body>
-
+    </table>
+    <font color="blue">
+      <font size="2"> ※Lv欄=ユニットレベル<br /> ※武器種欄の最下部には独特の武器補正を持つ武器を列挙<br />
+        <font color="red">
+          <font size="2"> ※魔力値or精神値依存攻撃の場合にも各武器種を選択(2022年01月20日より適用)<br /> ※ただし固定値ダメージや持続ダメージには武器補正が適用されないので素手を選択<br /> ※武器種"ジャンプ(両手武具)"は両手武具+ジャンプ攻撃時に選択<br /></font>
+          <font color="blue">
+            <font size="2"> ※二刀流時は左手の武器種に関わらず、右手に持った武器種を選択(二刀流時の武器補正は右手にのみ依存)<br /> ※二刀流時に実際に使われる攻撃値(Atk)は下記より算出<br /> ・二刀流でアビ1個使用→表示攻撃値-左手武器攻撃値および表示攻撃値-右手武器攻撃値<br /> ・二刀流+連続アビ使用→表示攻撃値-左手武器攻撃値<br /> ・二刀流+LB使用→表示攻撃値-右手or左手で低い方の武器攻撃値<br /> ※特効欄=キラー率(対象が複種族の場合は種族数に合わせて適宜除算)<br /> ※倍率欄=アビリティorLB倍率(15000%なら15000と記入)<br /> ※無視欄には攻撃アビ効果に"相手の防御or精神or魔法防御を○○%無効"などがある場合に記入<br /> ※LB欄=LBダメージアップ率<br /> ※EoP欄=ダークビジョンズ系でのパーティ属性ダメージアップ率("10"と記入)<br /> ※EoB欄=バフおよびエリア効果での属性ダメージアップ率(加算して記入)<br /><font color="red"><font size="2">  ※CDU欄=カテゴリーダメージアップでのダメージアップ率(30%なら30と記入)<br /></font><font color="blue"><font size="2"> ※Jmp欄=ジャンプダメージアップ率<br /> ※EST=幻獣ダメージ<br /> ※EDM=召喚ダメージ<br /> ※属耐欄=属性耐性値(弱点の場合はマイナス"-"を付けて記入)<br /> ※武耐欄=武器耐性値(ダウンの場合はマイナス"-"を付けて記入)<br /> ※防御値欄のデフォルト値250は不倒の木兵の防御値および精神値と同等<br /> ※デバフ欄には各種防御系デバフ率を記入(ヒカセンのアマイレなら45、病気なら10など)<br /> ※敵バフ欄には各種バフ率を合算で記入(内部防御バフ60%+後掛け防御バフ30%なら90など)<br /> ※フルチェインボーナス時は通常4倍ダメージ(極意系最大で6倍ダメージ)<br /> ※クリティカル時は1.5倍ダメージ<br /> ※予想ダメージはランダム補正込み<br /><br />
+              <font color="red">
+                <結果と実際の値には誤差があります>
+              </font><br /> ※小数点以下の処理方法や各パラメータの計算順番、その他の何かしらの要因等で多少の誤差は生じます<br /> ※あくまで参考程度のシミュレーターとして捉えてください<br /> </font>
+          </font>
+  </p><br />
+      </br>
+      <font color="black">
+        <font color=black>
+          <h2>《防御値計算》</h2>
+          <p>
+            <form action="#" name="form7">
+              <table>
+                <tr>
+                  <td>
+                    <font size="2"> LV </td>
+                  <td>
+                    <font size="2"> 武器種　　 </td>
+                  <td>
+                    <font size="2"> Atk　 　 </td>
+                  <td>
+                    <font size="2"> 特効　 </td>
+                  <td>
+                    <font size="2"> 倍率　　 </td>
+                  <td>
+                    <font size="2"> 無視　 </td>
+                  <td>
+                    <font size="2"> LB　 </td>
+                  <td>
+                    <font size="2"> EoP　 </td>
+                  <td>
+                    <font size="2"> EoB　 </td>
+                  <td>
+                    <font size="2"> EST　 </td>
+                  <td>
+                    <font size="2"> EDM　 </td>
+                  <td>
+                    <font size="2"> 属耐　 </td>
+                  <td>
+                    <font size="2"> デバフ </td>
+                  <td>
+                    <font size="2"> 敵バフ </td>
+                  <td>
+                    <font size="2"> 与ダメージ </td>
+                  <td> </td>
+                  <td>
+                    <font size="2"> 予想防御値 </tr>
+                <tr>
+                  <form action="#" name="form7">
+                    <td> <input type="text" name="LV" value="130" onkeyDown="return key_down(event.keyCode,1)" tabindex="401" size="2"> </td>
+                    <td> <select name="WEP" tabindex="402">
+				<option value="素手">素手</option>
+				<option value="格闘">格闘</option>
+				</select> </td>
+                    <td> <input type="text" name="ATK" value="300" onkeyDown="return key_down(event.keyCode,1)" tabindex="403" size="4">
+                      <td> <input type="text" name="Killer" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="404" size="2"> </td>
+                      <td> <input type="text" name="Wst" value="100" onkeyDown="return key_down(event.keyCode,1)" tabindex="405" size="6"> </td>
+                      <td> <input type="text" name="Wdp" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="406" size="2"> </td>
+                      <td> <input type="text" name="LBup" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="407" size="3"> </td>
+                      <td> <input type="text" name="EoP" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="408" size="2"> </td>
+                      <td> <input type="text" name="EoB" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="409" size="2"> </td>
+                      <td> <input type="text" name="EST" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="410" size="2"> </td>
+                      <td> <input type="text" name="EDM" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="411" size="2"> </td>
+                      <td> <input type="text" name="Ele" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="412" size="3"> </td>
+                      <td> <input type="text" name="Break" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="413" size="2"> </td>
+                      <td> <input type="text" name="Buff" value="0" onkeyDown="return key_down(event.keyCode,1)" tabindex="414" size="2"> </td>
+                      <td> <input type="text" name="Dmg" value="0" onkeyDown="return key_down2(event.keyCode)" tabindex="415" size="10"> </td>
+                      <td> <input type="button" value="計算" onclick="culc_defp();" tabindex="416"> <input type="button" value="Reset" onclick="reset()" tabindex="417"> </td>
+                      <td> <input type="text" name="Defp" value="" size="12"> </td>
+                </tr>
+              </table>
+              </form><br />
+              <font color="blue">
+                <font size="2"> ※ランダム補正があるので結果はおおよその数値となります<br /> ※素手or格闘武器での計測を想定しています<br /> ※より確度を上げるには当たりを付けた値付近での確認作業を繰り返す必要があります<br /> ※多くの場合で敵の防御値および精神値は切りの良い数値で設定されています<br /> ※例として不倒の木兵は防御250(精神250)<br /> ※各強敵の防御値に関しては"<a href="http://nogameno.life.coocan.jp/ffbe_def_list.htm">強敵防御値一覧</a>"を参照してください<br /> </font>
+              </font>
+          </p>
+          <p> <br />
+            <h2>《FFBEお役立ち情報各一覧》
+              <font size="2">
+                <font color="red">※最新画像を表示させるためにリンク先に飛んだ後にはリロード推奨</h2>
+            </font>
+            </font>
+            <font color="blue"> <font size="3"> ①<a href="http://nogameno.life.coocan.jp/Weapon_Range_list.png" />武器補正一覧</a><br /> ②<a href="http://nogameno.life.coocan.jp/Parameter_Limit_list.png">各能力値の上限</a><br /> ③<a href="http://nogameno.life.coocan.jp/P_Attack_Type_etc_list.png">各攻撃方法と有効無効成分</a><br /> ④<a href="http://nogameno.life.coocan.jp/E_Attack_Type_etc_list.png">各攻撃方法と防衛成分</a><br /> ⑤<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_list.png">120%属性デバフ一覧(更新停止中)</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_fire.png">火</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_ice.png">氷</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_lightning.png">雷</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_water.png">水</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_wind.png">風</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_earth.png">土</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_light.png">光</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_120_dark.png">闇</a><br /> ⑥
+              <a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_list.png">
+                <font color=red>130%</font>属性デバフ一覧(更新停止中)</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_fire.png">火</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_ice.png">氷</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_lightning.png">雷</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_water.png">水</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_wind.png">風</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_earth.png">土</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_light.png">光</a> 　・<a href="http://nogameno.life.coocan.jp/Ele_Dbuff_130_dark.png">闇</a><br /> ⑦<a href="http://nogameno.life.coocan.jp/Espers_Damage_list.png">幻獣召喚ダメージ倍率</a><br /> ⑧<a href="http://nogameno.life.coocan.jp/Not_Removed_Buff_list.png">デスペル不可ステータスバフ一覧(更新停止中)</a><br /> ⑨<a href="http://nogameno.life.coocan.jp/Killer_Buff_list.png">キラーバフ一覧(更新停止中)</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_human.png">人</a> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_beast.png">獣</a> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_demon.png">悪魔</a> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_dragon.png">竜</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_plant.png">植物</a> ・<a href="http://nogameno.life.coocan.jp/Killer_Buff_insect.png">虫</a> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_aquan.png">水棲</a> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_machine.png">機械</a><br /> 　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_fairy.png">精霊</a> ・<a href="http://nogameno.life.coocan.jp/Killer_Buff_reaper.png">死霊</a> ・<a href="http://nogameno.life.coocan.jp/Killer_Buff_stone.png">石</a> 　　・<a href="http://nogameno.life.coocan.jp/Killer_Buff_avian.png">鳥</a><br /> ⑩<a href="http://nogameno.life.coocan.jp/LB_EXP_list.png">LB熟練度表</a><br /> ⑪<a href="http://nogameno.life.coocan.jp/B_Ability_Awaking_item_list.png">ブレイブアビリティ覚醒必要素材数</a><br /> ⑫<a href="http://nogameno.life.coocan.jp/BS_Turn_list.png">ブレイブシフト各ターン数(更新停止中)</a><br /> ⑬<a href="http://nogameno.life.coocan.jp/Charn&Stop&Death_ResistEquipment_list.png">魅了&ストップ&即死耐性装備アビ一覧</a><br /> <br /> <br /> <br /> </body>
 </html>
