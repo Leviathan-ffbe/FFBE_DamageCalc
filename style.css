@@ -1,146 +1,47 @@
 @charset "UTF-8";
 
-/* Reset and box-sizing */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
-  font-size: 62.5%;
+    font-size: 62.5%;
 }
 
 body {
-  font-size: 1.4rem;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f2f2f2;
-  background: url(https://www.equilibrium.design/example-image.jpg) repeat;
-}
-
-h1 {
-  font-size: 2.8rem;
-  color: #333;
-  text-align: center;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: #fff;
-}
-
-h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1.6rem;
-  color: #555;
-}
-
-a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-a:hover, a:focus {
-  text-decoration: underline;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 2rem;
-}
-
-th,
-td {
-  padding: 8px;
-  border: 1px solid #ccc;
-}
-
-th {
-  font-weight: bold;
-  background-color: #f5f5f5;
+    font-size: 1.4rem;
+    background: url(http://nogameno.life.coocan.jp/bg001.jpg) repeat;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .tooltip {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .tooltip .tooltiptext {
-  visibility: hidden;
-  max-width: 500px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
-  white-space: nowrap;
-  font-size: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow */
+    visibility: hidden;
+    max-width: 100%; /* Ensure it adapts on smaller screens */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.25rem; /* Bootstrap's default border-radius */
+    padding: 0.5rem; /* Use rem for consistent spacing */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    font-size: 1.2rem; /* Scalable text */
 }
 
 .tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
-.red {
-  color: red;
-}
-
-.small {
-  font-size: 1.4rem;
-}
-
-.video-link {
-  font-size: 1.4rem;
-  color: red;
-}
-
-.blue {
-  color: #007bff;
-}
-
-.blue-bg {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.blue-link {
-  color: #007bff;
-}
-
-.blue-bg-hover:hover {
-  background-color: #0056b3; /* Slightly darker blue for hover */
-  color: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  h1 {
-    font-size: 2.4rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-  }
-
-  p {
-    font-size: 1.4rem;
-  }
-
-  table {
-    font-size: 1.4rem;
-  }
+@media (max-width: 576px) {
+    .tooltip .tooltiptext {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+        padding: 0.4rem;
+    }
 }
